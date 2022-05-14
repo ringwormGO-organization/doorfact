@@ -36,10 +36,6 @@ while True:
 	print(f"$ {recv_command.decode()}")
 
 	call = subprocess.run(recv_command.decode(), shell=True, capture_output=True)
-	"""
-	If there are any better function than check_output that if I enter a command but it is
-	an invalid command it still print the unsuccessful output pls contribute
-	"""
 	output = call.stdout.decode()
 	error = call.stderr.decode()
 	if len(output) > 0 and len(error) <= 0:

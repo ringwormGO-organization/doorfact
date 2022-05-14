@@ -10,7 +10,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
 
 while True:
-	recv_output = s.recv(16384) # Might be very long
+	recv_output = s.recv(524288) # Might be very long, this is 512KB
 	print(recv_output.decode())
 
 	inp = input("$ ")

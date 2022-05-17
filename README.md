@@ -7,7 +7,11 @@ We want you to add more version of it!! All language are accepted.
 
 We are just intended to:
 
+<<<<<<< HEAD
 Making the bind shell can execute command correctly on both Windows and Linux
+=======
+[ ] Making the bind shell can execute command correctly on both Windows and Linux
+>>>>>>> 88d61c8ddedca05ed386ec634418e42bb5a03cdc
 
 Bypass firewall
 

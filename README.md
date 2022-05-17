@@ -7,7 +7,7 @@ We want you to add more version of it!! All language are accepted.
 
 We are just intended in:
 
-[-] Making the bind shell can execute command correctly on both Windows and Linux
+[ ] Making the bind shell can execute command correctly on both Windows and Linux
 
 [ ] Bypass firewall
 

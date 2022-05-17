@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import socket
 import subprocess
 
-print("doorfact - for backdoors")
+print("doorfact server - for backdoors")
 
 # Verbosely  - just for debugging
 

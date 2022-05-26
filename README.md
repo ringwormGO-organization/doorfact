@@ -1,5 +1,5 @@
 # doorfact
-A backdoor written in ...
+A bind shell written in ...
 
 Still in development, if you want to improve you should consider become a contributor.
 

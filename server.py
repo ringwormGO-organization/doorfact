@@ -3,7 +3,7 @@
 """
 BSD 3-Clause License
 
-Copyright (c) 2022, ringwormGO and/or Someone8859 (Someone, Someone1611, Someone1611_8859)
+Copyright (c) 2022, ringwormGO <ringwormgo@gmail.com>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

